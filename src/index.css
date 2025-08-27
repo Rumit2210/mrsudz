@@ -1,0 +1,183 @@
+/* =========================================
+   Font imports & registration
+   ========================================= */
+
+/* Google Fonts for body & default headings */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Lilita+One&display=swap');
+
+/* Local display font: Jumbo Sale Trial
+   Put the file at: src/assets/fonts/JumboSaleTrial.ttf */
+/* Register local display font: Jumbo Sale Trial */
+@font-face {
+  font-family: 'Jumbo Sale Trial';
+  src: url('/src/assets/fonts/ju') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =========================================
+   Tailwind layers
+   ========================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   Global fonts & base styles
+   (Lilita One for standard headings,
+    Baloo 2 for body; Jumbo for hero)
+   ========================================= */
+@layer base {
+  html {
+    @apply font-sans antialiased;
+  }
+
+  /* Default headings use Lilita One */
+  h1, h2, h3, h4, h5, h6,
+  .heading-section {
+    @apply font-cartoon;
+    letter-spacing: -0.01em;
+  }
+
+  /* Hero headings use Jumbo Sale Trial */
+  .heading-hero {
+    font-family: 'Jumbo Sale Trial', sans-serif;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Helper class to force Jumbo anywhere (works even without Tailwind config) */
+.jumbo {
+  font-family: 'Jumbo Sale Trial', sans-serif !important;
+}
+
+/* If you added fontFamily.jumbo in tailwind.config.js,
+   you can also use: class="font-jumbo" in JSX */
+
+/* =========================================
+   Playful animations
+   ========================================= */
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease forwards;
+  }
+  .animate-wiggle {
+    animation: wiggle 2.2s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1deg) translateY(0); }
+  50%      { transform: rotate(1deg) translateY(-2px); }
+}
+
+/* =========================================
+   3D flip helpers
+   ========================================= */
+.perspective { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* =========================================
+   Enhanced responsive utilities
+   ========================================= */
+@layer utilities {
+  /* Sections */
+  .section-padding { @apply px-4 sm:px-6 lg:px-8; }
+  .section-spacing { @apply space-y-8 sm:space-y-12 lg:space-y-16; }
+
+  /* Text scales */
+  .heading-hero { @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl; }
+  .heading-section { @apply text-xl sm:text-2xl lg:text-3xl; }
+  .text-responsive { @apply text-sm sm:text-base lg:text-lg; }
+
+  /* Responsive grids */
+  .grid-responsive-2 { @apply grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6; }
+  .grid-responsive-3 { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6; }
+  .grid-responsive-4 { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6; }
+
+  /* Container */
+  .container-responsive { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+}
+
+/* =========================================
+   Mobile menu transitions
+   (used if you add CSS transitions instead of framer)
+   ========================================= */
+.mobile-menu-enter { opacity: 0; transform: translateY(-10px); }
+.mobile-menu-enter-active {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 200ms, transform 200ms;
+}
+.mobile-menu-exit { opacity: 1; transform: translateY(0); }
+.mobile-menu-exit-active {
+  opacity: 0; transform: translateY(-10px);
+  transition: opacity 200ms, transform 200ms;
+}
+
+/* =========================================
+   Accessibility: reduce motion
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-wiggle,
+  .animate-fade-up {
+    animation: none !important;
+  }
+}
+
+/* =========================================
+   Touch-friendly: optional auto flip
+   ========================================= */
+@media (hover: none) and (pointer: coarse) {
+  .flip-card-hover { animation: auto-flip 8s infinite; }
+}
+@keyframes auto-flip {
+  0%, 50% { transform: rotateY(0deg); }
+  25%, 75% { transform: rotateY(180deg); }
+}
+
+/* =========================================
+   (Optional) Fancy shimmer border & face shine
+   If you use `.shimmer-ring` or `.face-shine` on cards
+   ========================================= */
+@layer utilities {
+  .shimmer-ring {
+    position: relative;
+  }
+  .shimmer-ring::before {
+    content: "";
+    position: absolute; inset: -1px;
+    border-radius: inherit;
+    background: conic-gradient(from 0deg, #38bdf8, #60a5fa, #38bdf8);
+    filter: blur(6px);
+    opacity: .35;
+    z-index: -1;
+    animation: ring-spin 6s linear infinite;
+  }
+  .face-shine::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,.35), transparent 60%);
+    pointer-events: none;
+  }
+}
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}

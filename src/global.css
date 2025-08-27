@@ -1,0 +1,66 @@
+@layer utilities {
+  /* rotating conic gradient ring */
+  .shimmer-ring {
+    position: relative;
+    border-radius: 1rem; /* match rounded-2xl */
+    isolation: isolate;
+  }
+  .shimmer-ring::before {
+    content: "";
+    position: absolute;
+    inset: -2px;               /* thickness of the ring */
+    border-radius: inherit;
+    background:
+      conic-gradient(
+        from 0deg,
+        rgba(14,165,233,0) 0%,
+        rgba(14,165,233,.6) 10%,
+        rgba(14,165,233,0) 20%,
+        rgba(59,130,246,.6) 40%,
+        rgba(14,165,233,0) 60%,
+        rgba(14,165,233,.6) 80%,
+        rgba(14,165,233,0) 100%
+      );
+    animation: spin-slow 3.2s linear infinite;
+    z-index: -1;
+    /* create a hole so inner card stays clean */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    padding: 2px; /* ring thickness visible */
+  }
+
+  @keyframes spin-slow {
+    to { transform: rotate(1turn); }
+  }
+
+  /* subtle inner sheen that travels across the card face */
+  .face-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .face-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+    transform: translateX(-120%);
+    animation: sweep 3.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes sweep {
+    0%, 60%   { transform: translateX(-120%) }
+    75%       { transform: translateX(120%) }
+    100%      { transform: translateX(120%) }
+  }
+
+  /* glow for trending card */
+  .glow {
+    box-shadow:
+      0 0 0 3px rgba(14,165,233,.12),
+      0 10px 30px rgba(14,165,233,.25),
+      inset 0 0 12px rgba(59,130,246,.18);
+  }
+}
