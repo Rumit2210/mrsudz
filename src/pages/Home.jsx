@@ -7,7 +7,7 @@ import Testimonials from "../components/home/Testimonials";
 import ServicesSection from "../components/home/ServicesSection";
 import LocationsSection from "../components/home/LocationsSection";
 import CtaSection from "../components/home/CtaSection";
-import summerBanner from "../assets/banners/promo-banner.png";
+import summerBanner from "../assets/banners/promo-banner.jpg";
 import FundraisingSection from "../components/home/FundraisingSection";
 import GalleryCarousel from "../components/home/GalleryCarousel";
 

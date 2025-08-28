@@ -1,5 +1,5 @@
 import React from "react";
-import promoBanner from "../../assets/banners/promo-banner.png"; // adjust path if needed
+import promoBanner from "../../assets/banners/promo-banner.jpg"; // adjust path if needed
 
 export default function PromoBanner() {
   return (
